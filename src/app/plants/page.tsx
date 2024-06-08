@@ -4,7 +4,8 @@ import Image from 'next/image'
 import Paw from '../../../public/paw.svg'
 import { useRouter, useSearchParams } from "next/navigation"
 import PlantDetails from "./components/PlantDetails"
-import plant from '../../../public/plant.png'
+import { Suspense } from 'react';
+
 export interface IPlantDetails {
     "id": number,
     "name": string,
@@ -17,7 +18,7 @@ export interface IPlantDetails {
     "bio": string,
     "image": string
 }
-const Plants = () => {
+const PlantsPage  = () => {
     const [plantData, setPlantData] = useState<IPlantDetails[] | []>([])
     const path = useSearchParams().get('id')
     const router = useRouter()
@@ -51,4 +52,11 @@ const Plants = () => {
         }
     </div>
 }
+const Plants = () => {
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <PlantsPage />
+      </Suspense>
+    );
+  };
 export default Plants
